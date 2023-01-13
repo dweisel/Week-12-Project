@@ -17,8 +17,8 @@ class Room {
 }
 
 class HouseService {
-    // static url = 'https://ancient-taiga-31359.herokuapp.com/api/houses';
-    static url = 'https://63bb3d5032d17a50908ae83a.mockapi.io/house';
+    static url = 'https://ancient-taiga-31359.herokuapp.com/api/houses';
+    // static url = 'https://63bb3d5032d17a50908ae83a.mockapi.io/house';
 
     static getAllHouses() {
         return $.get(this.url);
