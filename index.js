@@ -10,15 +10,16 @@ class House {
 }
 
 class Room {
-    constructor(name, area) {
+    constructor(name, area, id) {
         this.name = name;
         this.area = area;
+        this.id = id;
     }
 }
 
 class HouseService {
-    static url = 'https://ancient-taiga-31359.herokuapp.com/api/houses';
-    // static url = 'https://63bb3d5032d17a50908ae83a.mockapi.io/house';
+    // static url = 'https://ancient-taiga-31359.herokuapp.com/api/houses';
+    static url = 'https://63bb3d5032d17a50908ae83a.mockapi.io/house';
 
     static getAllHouses() {
         return $.get(this.url);
@@ -77,7 +78,15 @@ class DOMManager {
     static addRoom(id){
         for (let house of this.houses){
            if (house._id == id) {
-            house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val()));
+            let room_id = 1
+
+            // matt suggested i write a for loop (see below) to increment room id so that each room has a unique id 
+            // to ensure "delte room" works, but when I did, I got an error when I tried to add a room
+
+            // for (let i = 1; i < house.length; i++)
+
+            house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val(), room_id));
+            console.log(house)
             HouseService.updateHouse(house)
             .then(() => {
                 return HouseService.getAllHouses();
@@ -89,11 +98,14 @@ class DOMManager {
         }
     
     static deleteRoom (houseId, roomId) {
+        console.log('delete room method', houseId, 'room id', roomId)
         for (let house of this.houses) {
+            // console.log('house', house)
             if (house._id == houseId){
                 for (let room of house.rooms) {
-                    if(room._id == roomId){
+                    if(room.id == roomId){
                      house.rooms.splice(house.rooms.indexOf(room), 1);
+                     console.log(house)
                      HouseService.updateHouse(house)
                      .then(() => {
                         return HouseService.getAllHouses();
@@ -110,7 +122,7 @@ class DOMManager {
         $('#app').empty();
         for (let house of houses){
             $('#app').prepend(
-                `<div id="${house._id}" class="card">
+            `<div id="${house._id}" class="card">
                 <div class="card-header">
                     <h2>${house.name}</h2>
                     <button class="btn btn-danger" onclick="DOMManager.deleteHouse('${house._id}')">Delete</button>
@@ -134,9 +146,9 @@ class DOMManager {
             for (let room of house.rooms){
              $(`#${house._id}`).find('.card-body').append(
                 `<p>
-                    <span id="name-${room._id}"><strong>Name: </strong> ${room.name}</span>
-                    <span id="area-${room._id}"><strong>area: </strong> ${room.area}</span>
-                    <button class="btn btn-danger" onclick="DOMManager.deleteRoom('${house._id}' , '${room._id}')">Delete Room</button>`
+                    <span id="name-${room.id}"><strong>Name: </strong> ${room.name}</span>
+                    <span id="area-${room.id}"><strong>area: </strong> ${room.area}</span>
+                    <button class="btn btn-danger" onclick="DOMManager.deleteRoom('${house._id}' , '${room.id}')">Delete Room</button>`
                     
 
              )   
