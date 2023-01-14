@@ -18,7 +18,6 @@ class Room {
 }
 
 class HouseService {
-    // static url = 'https://ancient-taiga-31359.herokuapp.com/api/houses';
     static url = 'https://63bb3d5032d17a50908ae83a.mockapi.io/house';
 
     static getAllHouses() {
@@ -80,10 +79,9 @@ class DOMManager {
            if (house._id == id) {
             let room_id = 0
 
-            // matt suggested i write a for loop (see below) to increment room id so that each room has a unique id 
-            // to ensure "delte room" works, but when I did, I got an error when I tried to add a room
-
-            // for (let i = 0; i < 0; id=+1)
+            // Matt suggested I write a for loop to increment room id so that each room has a unique id 
+            // to ensure "delte room" works, but when I wrote a for loop, I got an error when I tried to add a room.
+            // App works perfectly fine, (add and delete rooms and houses) without for loop to add a unique id to each room.
   
 
             house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val(),room_id));
