@@ -78,14 +78,15 @@ class DOMManager {
     static addRoom(id){
         for (let house of this.houses){
            if (house._id == id) {
-            let room_id = 1
+            let room_id = 0
 
             // matt suggested i write a for loop (see below) to increment room id so that each room has a unique id 
             // to ensure "delte room" works, but when I did, I got an error when I tried to add a room
 
-            // for (let i = 1; i < house.length; i++)
+            // for (let i = 0; i < 0; id=+1)
+  
 
-            house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val(), room_id));
+            house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val(),room_id));
             console.log(house)
             HouseService.updateHouse(house)
             .then(() => {
