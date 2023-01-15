@@ -79,12 +79,14 @@ class DOMManager {
            if (house._id == id) {
             let room_id = 0
 
+
+
             // Matt suggested I write a for loop to increment room id so that each room has a unique id 
             // to ensure "delte room" works, but when I wrote a for loop, I got an error when I tried to add a room.
             // App works perfectly fine, (add and delete rooms and houses) without for loop to add a unique id to each room.
   
 
-            house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val(),room_id));
+            house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val(),room_id = house.rooms.length));
             console.log(house)
             HouseService.updateHouse(house)
             .then(() => {
